@@ -1,0 +1,7 @@
+snapshots/
+.hyperframes/
+node_modules/
+renders/*
+!renders/promo-moto-piste-privee.mp4
+!renders/couverture.jpg
+voix-meta.json

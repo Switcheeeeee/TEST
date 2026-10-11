@@ -1,0 +1,23 @@
+{
+  "provider": "gemini",
+  "tts_model": "gemini-3.8-flash-tts",
+  "voice": "Puck",
+  "lang": "fr",
+  "style": "Voix jeune et énergique, ton réseaux sociaux, sourire dans la voix. Rythme rapide et percutant, phrases courtes bien détachées, articulation nette. Français de France, tutoiement complice.",
+  "lines": [
+    { "id": "v01", "text": "Le permis moto… version piste privée." },
+    { "id": "v02", "text": "La piste ? Elle est à nous." },
+    { "id": "v03", "text": "Rien que pour nos élèves." },
+    { "id": "v04", "text": "Slalom." },
+    { "id": "v05", "text": "Freinage." },
+    { "id": "v06", "text": "Évitement." },
+    { "id": "v07", "text": "À ton rythme, en toute sécurité…" },
+    { "id": "v08", "text": "Puis… la route." },
+    { "id": "v09", "text": "Permis A2 : vingt heures de formation." },
+    { "id": "v10", "text": "Huit sur notre piste, douze sur la route." },
+    { "id": "v11", "text": "Sept cent quatre-vingt-dix euros. Prix fixe." },
+    { "id": "v12", "text": "Et aussi : passerelle A2 et formation 125." },
+    { "id": "v13", "text": "Auto-École Wissous. Réserve ta place : lien en bio !" }
+  ],
+  "bgm": { "mode": "none" }
+}

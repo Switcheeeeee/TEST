@@ -37,7 +37,16 @@ index.html            Page unique : accueil, forfaits, options, moto, passerelle
 assets/css/styles.css Styles (thème clair et sombre automatiques)
 assets/js/main.js     Menu mobile, effets 3D, apparitions, formulaire et total estimé
 assets/favicon.svg    Icône de l'onglet
+video/moto-promo/     Vidéo promo moto (projet HyperFrames, hors site)
 ```
+
+## Vidéo promo moto
+
+Une vidéo verticale de 32 secondes pour Instagram et TikTok (motion design 3D
+isométrique, piste privée mise en avant) se trouve dans `video/moto-promo/` :
+le fichier final est `video/moto-promo/renders/promo-moto-piste-privee.mp4` et
+le projet [HyperFrames](https://hyperframes.heygen.com) qui la génère est décrit
+dans `video/moto-promo/README.md`.
 
 ## À personnaliser avant la mise en ligne
 

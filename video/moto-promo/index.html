@@ -1,0 +1,1274 @@
+<!doctype html>
+<html
+  lang="fr"
+  data-resolution="portrait"
+  data-composition-variables='[
+    {"id":"ecole","type":"string","label":"Nom après AUTO-ÉCOLE","default":"WISSOUS"},
+    {"id":"ville","type":"string","label":"Lieu affiché","default":"WISSOUS · ESSONNE (91)"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Permis moto, piste privée</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script type="importmap">
+      { "imports": { "three": "./assets/vendor/three.module.min.js" } }
+    </script>
+    <style>
+      @font-face {
+        font-family: "Barlow Condensed";
+        src: url("assets/fonts/BarlowCondensed-900i.woff2") format("woff2");
+        font-weight: 900;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: "Barlow Condensed";
+        src: url("assets/fonts/BarlowCondensed-800i.woff2") format("woff2");
+        font-weight: 800;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: "Barlow Condensed";
+        src: url("assets/fonts/BarlowCondensed-800.woff2") format("woff2");
+        font-weight: 800;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Barlow Condensed";
+        src: url("assets/fonts/BarlowCondensed-700.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Geist Mono";
+        src: url("assets/fonts/GeistMono-var.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+      }
+
+      :root {
+        --navy: #061a47;
+        --navy-2: #0d2766;
+        --brand: #0d52d9;
+        --brand-deep: #0a3aa6;
+        --signal: #ff5b3a;
+        --signal-deep: #c63a1f;
+        --white: #f7f9ff;
+        --sky: #8fb3ff;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--navy);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: var(--white);
+        font-family: "Barlow Condensed", sans-serif;
+      }
+      .full {
+        position: absolute;
+        inset: 0;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .abs {
+        position: absolute;
+      }
+      .display {
+        font-family: "Barlow Condensed", sans-serif;
+        font-style: italic;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.86;
+        letter-spacing: -0.005em;
+        white-space: nowrap;
+      }
+      .mono {
+        font-family: "Geist Mono", monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        white-space: nowrap;
+      }
+      .lift {
+        text-shadow:
+          0 6px 0 rgba(6, 26, 71, 0.9),
+          0 14px 34px rgba(3, 10, 36, 0.75);
+      }
+      .iso-orange {
+        color: var(--signal);
+        text-shadow:
+          2px 2px 0 #e14a2b,
+          4px 4px 0 #e14a2b,
+          6px 6px 0 #c63a1f,
+          8px 8px 0 #c63a1f,
+          10px 10px 0 #a32e18,
+          12px 12px 0 #a32e18,
+          14px 14px 0 #061a47,
+          16px 16px 0 #061a47,
+          18px 18px 30px rgba(3, 10, 36, 0.8);
+      }
+      .iso-white {
+        color: var(--white);
+        text-shadow:
+          2px 2px 0 #8fb3ff,
+          4px 4px 0 #8fb3ff,
+          6px 6px 0 #0d52d9,
+          8px 8px 0 #0d52d9,
+          10px 10px 0 #0a3aa6,
+          12px 12px 0 #0a3aa6,
+          14px 14px 0 #061a47,
+          16px 16px 0 #061a47,
+          18px 18px 34px rgba(3, 10, 36, 0.85);
+      }
+      .slab {
+        display: inline-block;
+        background: var(--signal);
+        color: var(--navy);
+        padding: 0.08em 0.24em 0.02em 0.18em;
+        transform: skewX(-9deg);
+        box-shadow:
+          10px 10px 0 var(--navy),
+          0 24px 40px rgba(3, 10, 36, 0.5);
+      }
+      .slab.white {
+        background: var(--white);
+      }
+      .slab > span {
+        display: inline-block;
+      }
+      .ch {
+        display: inline-block;
+      }
+
+      /* fond */
+      #bg-night {
+        background: #030c26;
+      }
+      #bg {
+        opacity: 0;
+        background: radial-gradient(ellipse 85% 52% at 50% 54%, #1b4cc2 0%, #0c2c80 40%, #061a47 74%);
+      }
+      #bg-grid {
+        opacity: 0.16;
+        background-image:
+          repeating-linear-gradient(30deg, rgba(143, 179, 255, 0.55) 0 2px, transparent 2px 92px),
+          repeating-linear-gradient(150deg, rgba(143, 179, 255, 0.55) 0 2px, transparent 2px 92px);
+      }
+      #bg-glow {
+        left: 90px;
+        top: 560px;
+        width: 900px;
+        height: 900px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(13, 82, 217, 0.55) 0%, rgba(13, 82, 217, 0) 70%);
+      }
+      #bg-ghost {
+        left: -40px;
+        top: 1330px;
+        font-size: 520px;
+        color: rgba(143, 179, 255, 0.07);
+      }
+      #world {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1920px;
+        display: block;
+      }
+      #fx-vignette {
+        background: radial-gradient(ellipse 75% 60% at 50% 50%, rgba(3, 10, 36, 0) 55%, rgba(3, 10, 36, 0.6) 100%);
+      }
+      #fx-flash {
+        background: #ffffff;
+        opacity: 0;
+      }
+      #fx-flash-orange {
+        background: var(--signal);
+        opacity: 0;
+      }
+      #fx-grain {
+        left: -200px;
+        top: -200px;
+        width: 1480px;
+        height: 2320px;
+        opacity: 0.07;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      }
+      #fx-speed .sl-rot {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 0;
+        height: 0;
+      }
+      #fx-speed .sl {
+        position: absolute;
+        left: -3px;
+        top: 260px;
+        width: 6px;
+        height: 520px;
+        border-radius: 3px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.85));
+        opacity: 0;
+      }
+
+      /* ancres 3D */
+      .anchor {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+      }
+      .tag {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 26px 12px;
+        border-radius: 999px;
+        font-size: 32px;
+        background: var(--white);
+        color: var(--navy);
+        box-shadow:
+          0 8px 0 var(--navy),
+          0 18px 30px rgba(3, 10, 36, 0.45);
+      }
+      .tag.orange {
+        background: var(--signal);
+      }
+      .pin-line {
+        position: absolute;
+        width: 4px;
+        background: var(--white);
+        border-radius: 2px;
+      }
+
+      /* scène 1 : accroche */
+      #h-k1 {
+        left: 80px;
+        top: 300px;
+        font-size: 120px;
+      }
+      #h-k2 {
+        left: 86px;
+        top: 432px;
+        font-size: 40px;
+        color: #d4e2ff;
+        letter-spacing: 0.34em;
+        text-shadow: 0 3px 0 rgba(6, 26, 71, 0.9), 0 8px 22px rgba(3, 10, 36, 0.9);
+      }
+      #h-big {
+        left: 0;
+        top: 650px;
+        width: 1080px;
+        text-align: center;
+        font-size: 300px;
+      }
+      #h-big .line {
+        display: block;
+        color: #ff7357;
+      }
+      #h-big .line + .line {
+        margin-top: 0.12em;
+      }
+
+      /* scène 2 : reveal */
+      #r-chip {
+        left: 80px;
+        top: 292px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 32px 16px 24px;
+        border-radius: 999px;
+        background: rgba(6, 26, 71, 0.88);
+        border: 3px solid var(--sky);
+        font-size: 32px;
+        color: var(--white);
+      }
+
+      /* scène 3 : la piste est à nous */
+      #n-l1 {
+        left: 82px;
+        top: 292px;
+        font-size: 110px;
+        color: var(--sky);
+      }
+      #n-l2 {
+        left: 80px;
+        top: 400px;
+        font-size: 190px;
+      }
+      #n-l3 {
+        left: 92px;
+        top: 572px;
+        font-size: 210px;
+      }
+
+      /* scène 4 : portail */
+      #g-top {
+        left: 80px;
+        top: 282px;
+        display: flex;
+        align-items: flex-end;
+        gap: 26px;
+      }
+      #g-100 {
+        font-size: 270px;
+      }
+      #g-side {
+        padding-bottom: 30px;
+        font-size: 58px;
+        line-height: 1.12;
+        color: var(--white);
+      }
+      #g-side .o {
+        color: var(--signal);
+      }
+      #g-bot {
+        left: 80px;
+        top: 1268px;
+      }
+      #g-bot .slab {
+        font-size: 96px;
+        line-height: 0.95;
+        padding: 0.14em 0.3em 0.08em 0.24em;
+      }
+      #g-bot .big {
+        font-size: 140px;
+        color: var(--signal);
+      }
+      .brackets {
+        position: absolute;
+        width: calc(var(--ppu, 150) * 6.2px);
+        height: calc(var(--ppu, 150) * 1.55px);
+        left: calc(var(--ppu, 150) * -3.1px);
+        top: calc(var(--ppu, 150) * -0.78px);
+      }
+      .brackets i {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border: 0 solid var(--signal);
+      }
+      .brackets i:nth-child(1) {
+        left: -16px;
+        top: -16px;
+        border-left-width: 10px;
+        border-top-width: 10px;
+      }
+      .brackets i:nth-child(2) {
+        right: -16px;
+        top: -16px;
+        border-right-width: 10px;
+        border-top-width: 10px;
+      }
+      .brackets i:nth-child(3) {
+        left: -16px;
+        bottom: -16px;
+        border-left-width: 10px;
+        border-bottom-width: 10px;
+      }
+      .brackets i:nth-child(4) {
+        right: -16px;
+        bottom: -16px;
+        border-right-width: 10px;
+        border-bottom-width: 10px;
+      }
+
+      /* scènes 5-7 : exercices */
+      #x-head {
+        left: 70px;
+        top: 250px;
+        width: 950px;
+        display: flex;
+        gap: 18px;
+      }
+      #x-head .step {
+        flex: 1;
+        font-size: 28px;
+        letter-spacing: 0.12em;
+        color: rgba(143, 179, 255, 0.75);
+      }
+      #x-head .step.on {
+        color: var(--white);
+      }
+      #x-head .bar {
+        margin-top: 12px;
+        height: 8px;
+        border-radius: 4px;
+        background: rgba(143, 179, 255, 0.28);
+        overflow: hidden;
+      }
+      #x-head .fill {
+        width: 100%;
+        height: 100%;
+        background: var(--signal);
+        transform-origin: left center;
+      }
+      .x-title {
+        left: 80px;
+        top: 328px;
+      }
+      .x-num {
+        font-size: 60px;
+        color: var(--signal);
+        letter-spacing: 0.06em;
+        margin-bottom: 10px;
+      }
+      .x-word {
+        font-size: 200px;
+      }
+      #x1-wave {
+        left: 84px;
+        top: 590px;
+        width: 620px;
+        height: 70px;
+      }
+      #x-gauge {
+        left: 70px;
+        top: 1150px;
+        width: 300px;
+        height: 300px;
+      }
+      #x-gauge .disc {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(6, 26, 71, 0.9);
+        border: 4px solid rgba(143, 179, 255, 0.5);
+        box-shadow: 0 12px 0 var(--navy), 0 24px 40px rgba(3, 10, 36, 0.5);
+      }
+      #x-gauge svg {
+        position: absolute;
+        inset: 0;
+      }
+      #x-gauge .val {
+        position: absolute;
+        left: 0;
+        top: 86px;
+        width: 300px;
+        text-align: center;
+        font-size: 120px;
+      }
+      #x-gauge .unit {
+        position: absolute;
+        left: 0;
+        top: 206px;
+        width: 300px;
+        text-align: center;
+        font-size: 26px;
+        color: var(--sky);
+      }
+
+      /* scène 8 : à ton rythme */
+      #y-l1 {
+        left: 80px;
+        top: 292px;
+        font-size: 170px;
+      }
+      #y-l2 {
+        left: 88px;
+        top: 452px;
+        font-size: 112px;
+      }
+
+      /* scène 9 : la route */
+      #z-l1 {
+        left: 86px;
+        top: 292px;
+        font-size: 46px;
+        color: var(--sky);
+        letter-spacing: 0.3em;
+      }
+      #z-l2 {
+        left: 80px;
+        top: 352px;
+        font-size: 250px;
+      }
+      #z-road {
+        left: 86px;
+        top: 590px;
+        width: 760px;
+        height: 16px;
+        border-radius: 8px;
+        background: repeating-linear-gradient(90deg, var(--white) 0 70px, transparent 70px 120px);
+        background-size: 120px 16px;
+      }
+
+      /* scènes 10-11 : offre */
+      #o-permis {
+        left: 0;
+        top: 470px;
+        width: 1080px;
+        text-align: center;
+        font-size: 44px;
+        color: var(--sky);
+        letter-spacing: 0.4em;
+      }
+      #o-badge {
+        left: 375px;
+        top: 540px;
+        width: 330px;
+        height: 330px;
+      }
+      #o-badge .face {
+        width: 100%;
+        height: 100%;
+        border-radius: 64px;
+        background: var(--signal);
+        color: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 250px;
+        padding-right: 12px;
+        box-shadow:
+          0 10px 0 #e14a2b,
+          0 20px 0 #a32e18,
+          0 30px 0 var(--navy),
+          0 46px 60px rgba(3, 10, 36, 0.6);
+      }
+      #o-hours {
+        left: 0;
+        top: 950px;
+        width: 1080px;
+        text-align: center;
+      }
+      #o-hours .num {
+        font-size: 330px;
+      }
+      #o-hours .lbl {
+        margin-top: 18px;
+        font-size: 38px;
+        color: var(--sky);
+        letter-spacing: 0.22em;
+      }
+      #o-split {
+        left: 80px;
+        top: 900px;
+        width: 920px;
+      }
+      #o-split .track {
+        display: flex;
+        height: 190px;
+        gap: 10px;
+      }
+      #o-split .seg {
+        position: relative;
+        height: 100%;
+        border-radius: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 30px;
+        transform-origin: left center;
+      }
+      #o-split .seg.a {
+        width: 40%;
+        background: var(--signal);
+        color: var(--navy);
+        box-shadow: 0 14px 0 #a32e18, 0 30px 40px rgba(3, 10, 36, 0.5);
+      }
+      #o-split .seg.b {
+        width: 60%;
+        background: var(--brand);
+        color: var(--white);
+        box-shadow: 0 14px 0 var(--brand-deep), 0 30px 40px rgba(3, 10, 36, 0.5);
+      }
+      #o-split .h {
+        font-size: 130px;
+      }
+      #o-split .s {
+        font-size: 24px;
+        letter-spacing: 0.12em;
+        margin-top: 6px;
+      }
+      #o-split .legend {
+        display: flex;
+        gap: 10px;
+        margin-top: 40px;
+        font-size: 24px;
+        color: var(--white);
+        letter-spacing: 0.1em;
+      }
+      #o-split .legend div:first-child {
+        width: 40%;
+      }
+
+      /* scène 12 : prix */
+      #p-kicker {
+        left: 0;
+        top: 530px;
+        width: 1080px;
+        text-align: center;
+        font-size: 40px;
+        color: var(--sky);
+        letter-spacing: 0.3em;
+      }
+      #p-price {
+        left: 0;
+        top: 620px;
+        width: 1080px;
+        text-align: center;
+        font-size: 400px;
+      }
+      #p-price .eur {
+        font-size: 290px;
+      }
+      #p-stamp {
+        left: 600px;
+        top: 960px;
+      }
+      #p-stamp .in {
+        display: inline-block;
+        transform: rotate(-9deg);
+        border: 8px solid var(--signal);
+        border-radius: 18px;
+        padding: 14px 26px 10px;
+        font-size: 50px;
+        color: var(--signal);
+        background: rgba(6, 26, 71, 0.85);
+        letter-spacing: 0.1em;
+      }
+      #p-age {
+        left: 0;
+        top: 1150px;
+        width: 1080px;
+        text-align: center;
+      }
+      #p-age .pill {
+        display: inline-block;
+        background: var(--white);
+        color: var(--navy);
+        border-radius: 999px;
+        padding: 20px 56px 12px;
+        font-size: 100px;
+        box-shadow: 0 12px 0 var(--sky), 0 30px 40px rgba(3, 10, 36, 0.5);
+      }
+
+      /* scène 13 : aussi */
+      #q-k {
+        left: 84px;
+        top: 476px;
+        font-size: 40px;
+        color: var(--sky);
+        letter-spacing: 0.26em;
+      }
+      .card {
+        left: 80px;
+        width: 920px;
+        height: 270px;
+        border-radius: 40px;
+        background: var(--white);
+        color: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px 0 46px;
+        box-shadow:
+          0 16px 0 var(--sky),
+          0 30px 50px rgba(3, 10, 36, 0.55);
+      }
+      #q-c1 {
+        top: 560px;
+      }
+      #q-c2 {
+        top: 880px;
+      }
+      .card .route {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 34px;
+      }
+      .card .badge {
+        background: var(--navy);
+        color: var(--white);
+        border-radius: 12px;
+        padding: 8px 16px 6px;
+        letter-spacing: 0.04em;
+      }
+      .card .info {
+        flex: 1;
+        min-width: 0;
+      }
+      .card .ttl {
+        margin-top: 14px;
+        font-size: 86px;
+      }
+      .card .sub {
+        margin-top: 8px;
+        font-size: 24px;
+        color: var(--brand);
+        letter-spacing: 0.1em;
+      }
+      .card .price {
+        flex-shrink: 0;
+        font-size: 132px;
+        color: var(--signal-deep);
+      }
+
+      /* scène 14 : appel à l'action */
+      #c-logo {
+        left: 465px;
+        top: 248px;
+        width: 150px;
+        height: 150px;
+      }
+      #c-logo .face {
+        width: 100%;
+        height: 100%;
+        border-radius: 40px;
+        background: var(--brand);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 0 var(--brand-deep), 0 24px 40px rgba(3, 10, 36, 0.55);
+      }
+      #c-k {
+        left: 0;
+        top: 432px;
+        width: 1080px;
+        text-align: center;
+        font-size: 40px;
+        letter-spacing: 0.42em;
+        color: var(--sky);
+      }
+      #c-name {
+        left: 0;
+        top: 486px;
+        width: 1080px;
+        text-align: center;
+        font-size: 230px;
+      }
+      #c-sub {
+        left: 0;
+        top: 706px;
+        width: 1080px;
+        text-align: center;
+        font-size: 30px;
+        letter-spacing: 0.24em;
+        color: var(--white);
+        text-shadow: 0 3px 0 rgba(6, 26, 71, 0.9), 0 8px 22px rgba(3, 10, 36, 0.9);
+      }
+      #c-sub .o {
+        color: var(--signal);
+      }
+      #c-btn {
+        left: 130px;
+        top: 1236px;
+        width: 820px;
+        height: 150px;
+      }
+      #c-btn .face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 999px;
+        background: var(--signal);
+        color: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 100px;
+        overflow: hidden;
+        box-shadow:
+          0 14px 0 #a32e18,
+          0 30px 50px rgba(3, 10, 36, 0.6);
+      }
+      #c-shine {
+        position: absolute;
+        left: -260px;
+        top: -40px;
+        width: 160px;
+        height: 240px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+      }
+      #c-bio {
+        left: 0;
+        top: 1424px;
+        width: 1080px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+        font-size: 40px;
+        letter-spacing: 0.22em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="32" data-width="1080" data-height="1920">
+      <!-- Fond partagé (non minuté) -->
+      <div id="bg-night" class="full"></div>
+      <div id="bg" class="full">
+        <div id="bg-grid" class="full"></div>
+        <div id="bg-glow" class="abs"></div>
+        <div id="bg-ghost" class="abs display" aria-hidden="true" data-layout-ignore>MOTO</div>
+      </div>
+
+      <!-- Monde 3D (Three.js) -->
+      <canvas id="world" width="1080" height="1920" data-layout-allow-overflow></canvas>
+      <div id="fx-vignette" class="full"></div>
+      <div id="fx-speed" class="full"></div>
+
+      <!-- 1. Accroche -->
+      <section id="s-hook" class="clip scene" data-start="0" data-duration="2.1" data-track-index="1">
+        <div id="h-group" class="full">
+          <div id="h-k1" class="abs display lift">Le permis moto</div>
+          <div id="h-k2" class="abs mono">Version</div>
+          <div id="h-big" class="abs display iso-orange" data-layout-allow-overlap>
+            <span class="line" id="h-big-1">Piste</span>
+            <span class="line" id="h-big-2">Privée</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Reveal de l'île -->
+      <section id="s-reveal" class="clip scene" data-start="2" data-duration="2" data-track-index="1">
+        <div id="r-chip" class="abs mono">
+          <svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true">
+            <path d="M17 0C7.6 0 0 7.4 0 16.6 0 29 17 44 17 44s17-15 17-27.4C34 7.4 26.4 0 17 0z" fill="#ff5b3a" />
+            <circle cx="17" cy="16.5" r="6.5" fill="#061a47" />
+          </svg>
+          <span data-var-text="ville">WISSOUS · ESSONNE (91)</span>
+        </div>
+      </section>
+
+      <!-- 3. La piste est à nous -->
+      <section id="s-nous" class="clip scene" data-start="4" data-duration="2" data-track-index="1">
+        <div id="n-l1" class="abs display lift">La piste ?</div>
+        <div id="n-l2" class="abs display lift">Elle est</div>
+        <div id="n-l3" class="abs display" data-layout-allow-overflow><span class="slab"><span>À nous.</span></span></div>
+      </section>
+
+      <!-- 4. Portail privé -->
+      <section id="s-gate" class="clip scene" data-start="6" data-duration="2" data-track-index="1">
+        <div class="anchor" data-anchor="gate">
+          <div class="brackets" id="g-brackets"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div id="g-top" class="abs">
+          <div id="g-100" class="display iso-white">100 %</div>
+          <div id="g-side" class="mono">Piste<br /><span class="o">privée</span></div>
+        </div>
+        <div id="g-bot" class="abs display">
+          <span class="slab white"><span>Rien que pour<br /><span class="big">nos élèves</span></span></span>
+        </div>
+      </section>
+
+      <!-- 5-7. Exercices : en-tête commun -->
+      <section id="s-ex-head" class="clip scene" data-start="8" data-duration="6" data-track-index="2">
+        <div id="x-head" class="abs mono">
+          <div class="step" id="x-st1">01 Slalom<div class="bar"><div class="fill" id="x-f1"></div></div></div>
+          <div class="step" id="x-st2">02 Freinage<div class="bar"><div class="fill" id="x-f2"></div></div></div>
+          <div class="step" id="x-st3">03 Évitement<div class="bar"><div class="fill" id="x-f3"></div></div></div>
+        </div>
+      </section>
+
+      <section id="s-ex1" class="clip scene" data-start="8" data-duration="2" data-track-index="1">
+        <div class="abs x-title" id="x1-title">
+          <div class="mono x-num" id="x1-num">01</div>
+          <div class="display x-word lift split" id="x1-word">Slalom</div>
+        </div>
+        <svg id="x1-wave" class="abs" viewBox="0 0 620 70" aria-hidden="true">
+          <path id="x1-wave-path" d="M4 35 C 60 -10, 100 -10, 155 35 S 250 80, 310 35 S 410 -10, 465 35 S 560 80, 616 35" fill="none" stroke="#ff5b3a" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+        </svg>
+      </section>
+
+      <section id="s-ex2" class="clip scene" data-start="10" data-duration="2" data-track-index="1">
+        <div class="abs x-title" id="x2-title">
+          <div class="mono x-num" id="x2-num">02</div>
+          <div class="display x-word lift" id="x2-word">Freinage</div>
+        </div>
+        <div id="x-gauge" class="abs">
+          <div class="disc"></div>
+          <svg viewBox="0 0 300 300" aria-hidden="true">
+            <path d="M 72 228 A 110 110 0 1 1 228 228" fill="none" stroke="rgba(143,179,255,0.25)" stroke-width="18" stroke-linecap="round" />
+            <path id="gauge-fill" d="M 72 228 A 110 110 0 1 1 228 228" fill="none" stroke="#ff5b3a" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+          </svg>
+          <div class="val display" id="speed-value">0</div>
+          <div class="unit mono">km/h</div>
+        </div>
+        <div class="anchor" data-anchor="stop">
+          <div class="pin-line" id="stop-line" style="left: -2px; top: -150px; height: 150px"></div>
+          <div class="tag orange mono" id="stop-tag" style="left: -86px; top: -230px">Stop</div>
+        </div>
+      </section>
+
+      <section id="s-ex3" class="clip scene" data-start="12" data-duration="2" data-track-index="1">
+        <div class="abs x-title" id="x3-title">
+          <div class="mono x-num" id="x3-num">03</div>
+          <div class="display x-word lift" id="x3-word">Évitement</div>
+        </div>
+        <div class="anchor" data-anchor="obstacle">
+          <div class="pin-line" id="obs-line" style="left: -2px; top: -170px; height: 150px"></div>
+          <div class="tag mono" id="obs-tag" style="left: -140px; top: -250px">Obstacle</div>
+        </div>
+      </section>
+
+      <!-- 8. À ton rythme -->
+      <section id="s-rythme" class="clip scene" data-start="14" data-duration="2" data-track-index="1">
+        <div id="y-l1" class="abs display lift split-words">À ton rythme</div>
+        <div id="y-l2" class="abs display"><span class="slab"><span>En toute sécurité</span></span></div>
+        <div class="anchor" data-anchor="moto">
+          <div class="tag mono" id="toi-tag" style="left: -122px; top: -112px">C’est toi</div>
+        </div>
+      </section>
+
+      <!-- 9. Puis la route -->
+      <section id="s-route" class="clip scene" data-start="16" data-duration="2" data-track-index="1">
+        <div id="z-l1" class="abs mono">Puis…</div>
+        <div id="z-l2" class="abs display lift">La route</div>
+        <div id="z-road" class="abs"></div>
+      </section>
+
+      <!-- 10-11. Offre : permis A2, 20 h -->
+      <section id="s-a2" class="clip scene" data-start="18" data-duration="4" data-track-index="1">
+        <div id="o-permis" class="abs mono">Permis</div>
+        <div id="o-badge" class="abs"><div class="face display">A2</div></div>
+        <div id="o-hours" class="abs">
+          <div class="num display iso-white"><span id="o-count">20</span>&nbsp;H</div>
+          <div class="lbl mono" id="o-lbl">de formation</div>
+        </div>
+        <div id="o-split" class="abs">
+          <div class="track">
+            <div class="seg a" id="o-seg-a"><div class="h display">8 H</div><div class="s mono">Piste privée</div></div>
+            <div class="seg b" id="o-seg-b"><div class="h display">12 H</div><div class="s mono">Circulation</div></div>
+          </div>
+          <div class="legend mono">
+            <div id="o-leg-a">Plateau</div>
+            <div id="o-leg-b">En ville, sur route</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12. Prix -->
+      <section id="s-prix" class="clip scene" data-start="22" data-duration="2" data-track-index="1">
+        <div id="p-kicker" class="abs mono">Permis A2 · 20 h</div>
+        <div id="p-price" class="abs display iso-white">790&nbsp;<span class="eur">€</span></div>
+        <div id="p-stamp" class="abs mono" data-layout-allow-overflow><span class="in">Prix fixe</span></div>
+        <div id="p-age" class="abs display"><span class="pill">Dès 18 ans</span></div>
+      </section>
+
+      <!-- 13. Aussi -->
+      <section id="s-aussi" class="clip scene" data-start="24" data-duration="2" data-track-index="1">
+        <div id="q-k" class="abs mono">Aussi chez nous</div>
+        <div id="q-c1" class="abs card">
+          <div class="info">
+            <div class="route mono"><span class="badge">A2</span><span>→</span><span class="badge">A</span></div>
+            <div class="ttl display">Passerelle</div>
+            <div class="sub mono">7 h · sans examen</div>
+          </div>
+          <div class="price display">300 €</div>
+        </div>
+        <div id="q-c2" class="abs card">
+          <div class="info">
+            <div class="route mono"><span class="badge">B</span><span>→</span><span class="badge">125</span></div>
+            <div class="ttl display">Formation 125</div>
+            <div class="sub mono">7 h · sans examen</div>
+          </div>
+          <div class="price display">400 €</div>
+        </div>
+      </section>
+
+      <!-- 14. Appel à l'action -->
+      <section id="s-cta" class="clip scene" data-start="26" data-duration="6" data-track-index="1">
+        <div id="c-logo" class="abs">
+          <div class="face">
+            <svg width="96" height="96" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9.25" fill="none" stroke="#f7f9ff" stroke-width="1.8" />
+              <circle cx="12" cy="12" r="2.4" fill="#f7f9ff" />
+              <path d="M2.9 11.2h6.7M14.4 11.2h6.7M12 14.4v6.7" fill="none" stroke="#f7f9ff" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div id="c-k" class="abs mono">Auto-école</div>
+        <div id="c-name" class="abs display iso-white" data-var-text="ecole">WISSOUS</div>
+        <div id="c-sub" class="abs mono">Essonne (91) · <span class="o">piste privée</span></div>
+        <div id="c-btn" class="abs">
+          <div class="face display" data-layout-allow-overflow><div id="c-shine" data-layout-ignore></div><span id="c-btn-txt">Réserve ta place</span></div>
+        </div>
+        <div id="c-bio" class="abs mono">
+          <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3.2-3.2a4.5 4.5 0 0 0-6.4-6.4l-1 1" fill="none" stroke="#ff5b3a" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3.2 3.2a4.5 4.5 0 0 0 6.4 6.4l1-1" fill="none" stroke="#ff5b3a" stroke-width="2.4" stroke-linecap="round" />
+          </svg>
+          <span>Lien en bio</span>
+        </div>
+      </section>
+
+      <div id="fx-flash-orange" class="full"></div>
+      <div id="fx-flash" class="full"></div>
+      <div id="fx-grain" class="abs"></div>
+
+      <!-- Musique et moteur (générés par tools/make_audio.py) -->
+      <audio id="a-music" src="assets/audio/music.wav" data-start="0" data-duration="32" data-track-index="10" data-volume="1"></audio>
+      <audio id="a-engine" src="assets/audio/engine.wav" data-start="0" data-duration="32" data-track-index="11" data-volume="0.9"></audio>
+
+      <!-- Effets sonores (bibliothèque HyperFrames) -->
+      <audio id="sfx-light" src="assets/audio/sfx/impact-bass-1.mp3" data-start="0.12" data-duration="2.1" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="sfx-k1" src="assets/audio/sfx/whoosh-short.mp3" data-start="0.36" data-duration="0.57" data-track-index="13" data-volume="0.5"></audio>
+      <audio id="sfx-version" src="assets/audio/sfx/click-soft.mp3" data-start="0.95" data-duration="0.36" data-track-index="14" data-volume="0.6"></audio>
+      <audio id="sfx-piste" src="assets/audio/sfx/impact-bass-2.mp3" data-start="0.88" data-duration="2.5" data-track-index="15" data-volume="0.7"></audio>
+      <audio id="sfx-reveal" src="assets/audio/sfx/whoosh-cinematic.mp3" data-start="1.7" data-duration="3.5" data-track-index="16" data-volume="0.55"></audio>
+      <audio id="sfx-pop1" src="assets/audio/sfx/pop.mp3" data-start="2.3" data-duration="0.72" data-track-index="17" data-volume="0.3"></audio>
+      <audio id="sfx-pop2" src="assets/audio/sfx/pop.mp3" data-start="2.62" data-duration="0.72" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sfx-pop3" src="assets/audio/sfx/pop.mp3" data-start="2.95" data-duration="0.72" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="sfx-nous" src="assets/audio/sfx/whoosh-short.mp3" data-start="4.42" data-duration="0.57" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="sfx-gate" src="assets/audio/sfx/whoosh.mp3" data-start="5.95" data-duration="0.57" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx-gate-slam" src="assets/audio/sfx/impact-bass-1.mp3" data-start="6.6" data-duration="2.1" data-track-index="14" data-volume="0.6"></audio>
+      <audio id="sfx-whip" src="assets/audio/sfx/whoosh.mp3" data-start="7.5" data-duration="0.57" data-track-index="15" data-volume="0.55"></audio>
+      <audio id="sfx-ex1" src="assets/audio/sfx/click.mp3" data-start="8.05" data-duration="0.36" data-track-index="16" data-volume="0.45"></audio>
+      <audio id="sfx-ex2" src="assets/audio/sfx/click.mp3" data-start="10.05" data-duration="0.36" data-track-index="17" data-volume="0.45"></audio>
+      <audio id="sfx-ex2-whoosh" src="assets/audio/sfx/whoosh-short.mp3" data-start="10.0" data-duration="0.57" data-track-index="18" data-volume="0.45"></audio>
+      <audio id="sfx-ex3" src="assets/audio/sfx/click.mp3" data-start="12.05" data-duration="0.36" data-track-index="19" data-volume="0.45"></audio>
+      <audio id="sfx-ex3-whoosh" src="assets/audio/sfx/whoosh-short.mp3" data-start="12.0" data-duration="0.57" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="sfx-toi" src="assets/audio/sfx/pop.mp3" data-start="14.35" data-duration="0.72" data-track-index="13" data-volume="0.4"></audio>
+      <audio id="sfx-route" src="assets/audio/sfx/whoosh-short.mp3" data-start="16.4" data-duration="0.57" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="sfx-a2" src="assets/audio/sfx/impact-bass-2.mp3" data-start="17.6" data-duration="2.5" data-track-index="15" data-volume="0.6"></audio>
+      <audio id="sfx-split" src="assets/audio/sfx/whoosh-short.mp3" data-start="20.25" data-duration="0.57" data-track-index="16" data-volume="0.45"></audio>
+      <audio id="sfx-price" src="assets/audio/sfx/impact-bass-1.mp3" data-start="21.98" data-duration="2.1" data-track-index="17" data-volume="0.7"></audio>
+      <audio id="sfx-stamp" src="assets/audio/sfx/click.mp3" data-start="22.55" data-duration="0.36" data-track-index="18" data-volume="0.55"></audio>
+      <audio id="sfx-age" src="assets/audio/sfx/pop.mp3" data-start="23.15" data-duration="0.72" data-track-index="19" data-volume="0.4"></audio>
+      <audio id="sfx-c1" src="assets/audio/sfx/whoosh-short.mp3" data-start="24.12" data-duration="0.57" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="sfx-c2" src="assets/audio/sfx/whoosh-short.mp3" data-start="24.42" data-duration="0.57" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="sfx-cta" src="assets/audio/sfx/whoosh-cinematic.mp3" data-start="25.0" data-duration="3.5" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="sfx-btn" src="assets/audio/sfx/ping.mp3" data-start="26.9" data-duration="1.32" data-track-index="15" data-volume="0.45"></audio>
+      <audio id="sfx-bio" src="assets/audio/sfx/chime.mp3" data-start="27.6" data-duration="2.5" data-track-index="16" data-volume="0.4"></audio>
+    </div>
+
+    <script>
+      // Découpe certains titres en lettres / mots (une seule fois, au chargement)
+      for (const el of document.querySelectorAll(".split")) {
+        el.innerHTML = [...el.textContent].map((c) => `<span class="ch">${c === " " ? "&nbsp;" : c}</span>`).join("");
+      }
+      for (const el of document.querySelectorAll(".split-words")) {
+        el.innerHTML = el.textContent
+          .split(" ")
+          .map((w) => `<span class="ch">${w}</span>`)
+          .join("&nbsp;");
+      }
+      // Lignes de vitesse radiales
+      const speed = document.getElementById("fx-speed");
+      for (let i = 0; i < 18; i++) {
+        const rot = document.createElement("div");
+        rot.className = "sl-rot";
+        rot.style.rotate = `${i * 20 + (i % 3) * 6}deg`;
+        const line = document.createElement("div");
+        line.className = "sl";
+        rot.appendChild(line);
+        speed.appendChild(rot);
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      const E = { o: "power3.out", i: "power2.in", slam: "power4.out", back: "back.out(1.8)", expo: "expo.out" };
+
+      const flash = (at, peak = 0.55, dur = 0.35, sel = "#fx-flash") => {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: peak, duration: 0.04, ease: "none", immediateRender: false }, at);
+        tl.to(sel, { opacity: 0, duration: dur, ease: "power2.out" }, at + 0.04);
+      };
+      const shake = (sel, at, amp = 14, dur = 0.4) => {
+        tl.to(sel, { keyframes: { x: [0, -amp, amp * 0.8, -amp * 0.5, amp * 0.3, 0], y: [0, amp * 0.6, -amp * 0.5, amp * 0.3, 0, 0] }, duration: dur, ease: "none" }, at);
+      };
+      const wipeIn = (sel, at, dur = 0.34) =>
+        tl.fromTo(sel, { clipPath: "inset(-20% 100% -20% 0%)" }, { clipPath: "inset(-20% -10% -20% 0%)", duration: dur, ease: E.expo }, at);
+
+      /* ---------- Fond ---------- */
+      tl.fromTo("#bg", { opacity: 0 }, { opacity: 0.34, duration: 0.05, ease: "none" }, 1.5);
+      tl.to("#bg", { opacity: 0.67, duration: 0.05, ease: "none" }, 1.75);
+      tl.to("#bg", { opacity: 1, duration: 0.05, ease: "none" }, 2.0);
+      tl.fromTo("#bg-glow", { scale: 0.9, opacity: 0.7 }, { scale: 1.12, opacity: 1, duration: 4, ease: "sine.inOut", yoyo: true, repeat: 7 }, 0);
+      tl.fromTo("#bg-grid", { x: 0, y: 0 }, { x: -92, y: 53, duration: 32, ease: "none" }, 0);
+      tl.fromTo("#bg-ghost", { x: 0 }, { x: -260, duration: 32, ease: "none" }, 0);
+      tl.fromTo("#fx-grain", { x: 0, y: 0 }, { x: 160, y: 120, duration: 32, ease: "steps(384)" }, 0);
+
+      /* ---------- 1. Accroche (0 – 2) ---------- */
+      flash(0.15, 0.32, 0.3);
+      wipeIn("#h-k1", 0.38, 0.32);
+      tl.fromTo("#h-k1", { x: -60 }, { x: 0, duration: 0.4, ease: E.o }, 0.38);
+      tl.fromTo("#h-k2", { opacity: 0, x: 40, scaleX: 1.25, transformOrigin: "0% 50%" }, { opacity: 1, x: 0, scaleX: 1, duration: 0.4, ease: E.o }, 0.92);
+      tl.fromTo("#h-big-1", { scale: 2.3, opacity: 0, filter: "blur(18px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.26, ease: E.slam }, 1.22);
+      tl.fromTo("#h-big-2", { scale: 2.3, opacity: 0, filter: "blur(18px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.26, ease: E.slam }, 1.32);
+      flash(1.3, 0.2, 0.25, "#fx-flash-orange");
+      shake("#h-group", 1.3, 18, 0.45);
+      tl.to("#h-group", { scale: 1.35, opacity: 0, filter: "blur(16px)", duration: 0.24, ease: E.i }, 1.84);
+
+      /* ---------- 2. Reveal (2 – 4) ---------- */
+      flash(2.0, 0.6, 0.45);
+      document.querySelectorAll("#fx-speed .sl").forEach((el, i) => {
+        const at = 2.0 + (i % 6) * 0.05;
+        tl.fromTo(el, { y: 0, scaleY: 0.2, opacity: 0 }, { y: 520, scaleY: 1.4, opacity: 0.9, duration: 0.35, ease: "power2.in" }, at);
+        tl.to(el, { opacity: 0, duration: 0.2, ease: "none" }, at + 0.35);
+      });
+      tl.fromTo("#r-chip", { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: E.back }, 2.75);
+      tl.fromTo("#r-chip svg", { y: -26, scale: 0.6 }, { y: 0, scale: 1, duration: 0.5, ease: "bounce.out" }, 2.85);
+      tl.to("#r-chip", { y: -30, opacity: 0, duration: 0.25, ease: E.i }, 3.72);
+
+      /* ---------- 3. La piste est à nous (4 – 6) ---------- */
+      tl.fromTo("#n-l1", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: E.o }, 4.0);
+      tl.fromTo("#n-l2", { y: 90, rotate: 4, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: 0.4, ease: E.back }, 4.12);
+      tl.fromTo("#n-l3 .slab", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.32, ease: E.expo }, 4.45);
+      tl.fromTo("#n-l3 .slab > span", { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: E.o }, 4.55);
+      shake("#n-l3", 4.62, 10, 0.3);
+      tl.to(["#n-l1", "#n-l2", "#n-l3"], { x: -240, opacity: 0, duration: 0.24, ease: E.i, stagger: 0.04 }, 5.7);
+
+      /* ---------- 4. Portail (6 – 8) ---------- */
+      tl.fromTo("#g-100", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.42, ease: "back.out(2.2)", transformOrigin: "0% 100%" }, 6.05);
+      tl.fromTo("#g-side", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: E.o }, 6.22);
+      tl.fromTo("#g-brackets", { scale: 1.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: E.o }, 6.1);
+      tl.to("#g-brackets", { scale: 1.06, duration: 0.25, ease: "sine.inOut", yoyo: true, repeat: 3 }, 6.5);
+      shake("#g-top", 6.62, 12, 0.35);
+      wipeIn("#g-bot", 6.85, 0.4);
+      tl.fromTo("#g-bot", { y: 40 }, { y: 0, duration: 0.4, ease: E.o }, 6.85);
+      tl.to(["#g-top", "#g-bot", "#g-brackets"], { x: -320, opacity: 0, filter: "blur(18px)", duration: 0.3, ease: "power3.in" }, 7.55);
+      tl.fromTo("#world", { filter: "blur(0px) brightness(1)" }, { filter: "blur(9px) brightness(1.05)", duration: 0.22, ease: "power2.in" }, 7.62);
+      tl.to("#world", { filter: "blur(0px) brightness(1)", duration: 0.32, ease: "power2.out" }, 7.84);
+
+      /* ---------- 5-7. Exercices (8 – 14) ---------- */
+      tl.fromTo("#x-head", { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: E.o }, 8.0);
+      [
+        ["#x-st1", "#x-f1", 8],
+        ["#x-st2", "#x-f2", 10],
+        ["#x-st3", "#x-f3", 12],
+      ].forEach(([st, f, at]) => {
+        tl.fromTo(f, { scaleX: 0 }, { scaleX: 1, duration: 1.9, ease: "none" }, at);
+        tl.set(st, { color: "#f7f9ff" }, at);
+        tl.fromTo(st, { scale: 1 }, { scale: 1.08, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "0% 50%" }, at);
+      });
+      tl.to("#x-head", { y: -30, opacity: 0, duration: 0.25, ease: E.i }, 13.75);
+
+      // 01 slalom : lettres qui ondulent
+      tl.fromTo("#x1-num", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: E.o }, 8.05);
+      tl.fromTo(
+        "#x1-word .ch",
+        { y: 140, rotate: 10, opacity: 0 },
+        { y: 0, rotate: 0, opacity: 1, duration: 0.42, ease: "back.out(1.7)", stagger: 0.04 },
+        8.1,
+      );
+      tl.to("#x1-word .ch", { keyframes: { y: [0, -18, 0, 14, 0] }, duration: 0.8, ease: "sine.inOut", stagger: 0.06 }, 8.6);
+      tl.fromTo("#x1-wave-path", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 8.25);
+      tl.to(["#x1-title", "#x1-wave"], { y: -60, opacity: 0, duration: 0.22, ease: E.i }, 9.78);
+
+      // 02 freinage : le mot arrive vite et pile net
+      tl.fromTo("#x2-num", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: E.o }, 10.05);
+      tl.fromTo("#x2-word", { x: 900, skewX: -24, opacity: 0 }, { x: -18, skewX: -24, opacity: 1, duration: 0.85, ease: "power1.in" }, 10.1);
+      tl.to("#x2-word", { x: 0, skewX: 0, duration: 0.4, ease: "back.out(3)" }, 10.95);
+      shake("#x2-title", 11.0, 10, 0.3);
+      tl.fromTo("#x-gauge", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: E.back }, 10.15);
+      tl.fromTo("#stop-line", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.25, ease: E.o }, 11.05);
+      tl.fromTo("#stop-tag", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, 11.15);
+      tl.to(["#x2-title", "#x-gauge", "#stop-tag", "#stop-line"], { y: -50, opacity: 0, duration: 0.22, ease: E.i }, 11.78);
+
+      // 03 évitement : le mot fait un écart
+      tl.fromTo("#x3-num", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: E.o }, 12.05);
+      tl.fromTo(
+        "#x3-word",
+        { x: 520, y: 0, opacity: 0 },
+        { keyframes: { x: [520, 260, 60, 0], y: [0, -70, -30, 0], opacity: [0, 1, 1, 1] }, duration: 0.6, ease: "power2.out" },
+        12.08,
+      );
+      tl.fromTo("#obs-line", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.25, ease: E.o }, 12.25);
+      tl.fromTo("#obs-tag", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.4)" }, 12.35);
+      tl.to(["#obs-tag", "#obs-line"], { opacity: 0, duration: 0.2, ease: "none" }, 13.3);
+      tl.to("#x3-title", { y: -50, opacity: 0, duration: 0.22, ease: E.i }, 13.76);
+
+      /* ---------- 8. À ton rythme (14 – 16) ---------- */
+      tl.fromTo("#y-l1 .ch", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.38, ease: E.back, stagger: 0.1 }, 14.05);
+      wipeIn("#y-l2", 14.5, 0.38);
+      tl.fromTo("#toi-tag", { scale: 0, opacity: 0, transformOrigin: "50% 100%" }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.6)" }, 14.35);
+      tl.to("#toi-tag", { y: -12, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 3 }, 14.75);
+      tl.to(["#y-l1", "#y-l2", "#toi-tag"], { y: -40, opacity: 0, duration: 0.24, ease: E.i }, 15.74);
+
+      /* ---------- 9. Puis la route (16 – 18) ---------- */
+      tl.fromTo("#z-l1", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: E.o }, 16.1);
+      tl.fromTo("#z-l2", { y: 120, scale: 0.9, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: E.back, transformOrigin: "0% 100%" }, 16.42);
+      tl.fromTo("#z-road", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: E.expo }, 16.6);
+      tl.fromTo("#z-road", { backgroundPositionX: "0px" }, { backgroundPositionX: "-480px", duration: 1.4, ease: "none", immediateRender: false }, 16.6);
+      tl.to(["#z-l1", "#z-l2", "#z-road"], { scale: 1.25, opacity: 0, filter: "blur(14px)", duration: 0.24, ease: E.i }, 17.76);
+
+      /* ---------- 10-11. Offre (18 – 22) ---------- */
+      flash(18.0, 0.5, 0.4);
+      tl.fromTo("#world", { filter: "blur(0px) brightness(1)" }, { filter: "blur(12px) brightness(0.58)", duration: 0.45, ease: E.o, immediateRender: false }, 18.0);
+      tl.fromTo("#o-permis", { opacity: 0, scaleX: 1.3 }, { opacity: 1, scaleX: 1, duration: 0.45, ease: E.o }, 18.05);
+      tl.fromTo("#o-badge", { scale: 0, rotate: -16 }, { scale: 1, rotate: 0, duration: 0.5, ease: "back.out(2)" }, 18.05);
+      tl.fromTo("#o-hours", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: E.o }, 18.4);
+      const count = { v: 0 };
+      tl.fromTo(
+        count,
+        { v: 0 },
+        {
+          v: 20,
+          duration: 0.85,
+          ease: "power2.out",
+          onUpdate: () => {
+            document.getElementById("o-count").textContent = String(Math.round(count.v));
+          },
+        },
+        18.42,
+      );
+      // passage à la répartition 8 h / 12 h
+      tl.to("#o-permis", { y: -150, opacity: 0, duration: 0.35, ease: "power3.inOut" }, 19.95);
+      tl.to("#o-badge", { x: -290, y: -230, scale: 0.5, duration: 0.45, ease: "power3.inOut" }, 19.95);
+      tl.to("#o-hours", { y: -560, x: 120, scale: 0.62, duration: 0.45, ease: "power3.inOut" }, 19.95);
+      tl.fromTo("#o-seg-a", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: E.expo }, 20.3);
+      tl.fromTo("#o-seg-b", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: E.expo }, 20.62);
+      tl.fromTo("#o-seg-a .h, #o-seg-a .s", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: E.o, stagger: 0.06 }, 20.55);
+      tl.fromTo("#o-seg-b .h, #o-seg-b .s", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: E.o, stagger: 0.06 }, 20.9);
+      tl.fromTo("#o-leg-a", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: E.o }, 20.7);
+      tl.fromTo("#o-leg-b", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: E.o }, 21.05);
+      tl.to(["#o-badge", "#o-hours", "#o-split"], { scale: 0.92, opacity: 0, duration: 0.22, ease: E.i }, 21.78);
+
+      /* ---------- 12. Prix (22 – 24) ---------- */
+      flash(22.0, 0.5, 0.35);
+      tl.fromTo("#p-kicker", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.3, ease: E.o }, 22.05);
+      tl.fromTo("#p-price", { scale: 2.4, opacity: 0, filter: "blur(20px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.3, ease: E.slam }, 22.0);
+      shake("#p-price", 22.28, 16, 0.4);
+      tl.fromTo("#p-stamp", { scale: 2.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(3)" }, 22.55);
+      tl.fromTo("#p-age", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: E.back }, 23.15);
+      tl.to(["#p-kicker", "#p-price", "#p-stamp", "#p-age"], { x: -200, opacity: 0, duration: 0.22, ease: E.i, stagger: 0.03 }, 23.78);
+
+      /* ---------- 13. Aussi (24 – 26) ---------- */
+      tl.fromTo("#q-k", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.3, ease: E.o }, 24.05);
+      tl.fromTo("#q-c1", { x: 1100 }, { x: 0, duration: 0.5, ease: E.expo }, 24.12);
+      tl.fromTo("#q-c2", { x: 1100 }, { x: 0, duration: 0.5, ease: E.expo }, 24.42);
+      tl.to(["#q-k", "#q-c1", "#q-c2"], { x: -1100, duration: 0.3, ease: "power3.in", stagger: 0.05 }, 25.7);
+      tl.to("#world", { filter: "blur(0px) brightness(1)", duration: 0.5, ease: E.o }, 25.75);
+
+      /* ---------- 14. Appel à l'action (26 – 32) ---------- */
+      flash(26.0, 0.45, 0.4);
+      tl.fromTo("#c-logo", { scale: 0, rotate: -120 }, { scale: 1, rotate: 0, duration: 0.55, ease: "back.out(1.9)" }, 26.05);
+      tl.fromTo("#c-k", { opacity: 0, scaleX: 1.3 }, { opacity: 1, scaleX: 1, duration: 0.45, ease: E.o }, 26.25);
+      tl.fromTo("#c-name", { clipPath: "inset(100% -10% -20% -10%)", y: 60 }, { clipPath: "inset(-20% -10% -20% -10%)", y: 0, duration: 0.45, ease: E.expo }, 26.35);
+      tl.fromTo("#c-sub", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E.o }, 26.7);
+      tl.fromTo("#c-btn", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 26.9);
+      tl.fromTo("#c-btn-txt", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: E.o }, 27.05);
+      tl.to("#c-btn", { scale: 1.06, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 7 }, 27.5);
+      [27.6, 28.8, 30.0, 31.2].forEach((at) => tl.fromTo("#c-shine", { x: 0 }, { x: 1150, duration: 0.6, ease: "power2.inOut", immediateRender: false }, at));
+      tl.fromTo("#c-bio", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E.o }, 27.6);
+      tl.to("#c-bio svg", { rotate: -18, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 5 }, 28.0);
+      flash(30.0, 0.3, 0.3);
+      tl.fromTo(["#c-logo", "#c-name"], { scale: 1 }, { scale: 1.06, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, 30.0);
+
+      window.__timelines["main"] = tl;
+    </script>
+    <script type="module" src="assets/world.js"></script>
+  </body>
+</html>
