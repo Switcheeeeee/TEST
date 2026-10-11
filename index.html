@@ -4,24 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Auto-École Wissous</title>
-<meta name="description" content="Auto-école à Wissous (91). Permis B en boîte manuelle ou automatique et permis moto A2. Forfaits clairs, à prix fixe, dès 790 €.">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Auto-école à Wissous (91). Permis B en boîte manuelle ou automatique, conduite accompagnée et supervisée, permis moto A2, passerelles et formation 125. Forfaits à prix fixe.">
+<meta name="theme-color" content="#0d52d9">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Auto-École Wissous">
-<meta property="og:description" content="Permis B manuelle ou automatique et permis moto A2, à Wissous (91). Forfaits dès 790 €.">
+<meta property="og:description" content="Permis B manuelle ou automatique, conduite accompagnée, moto A2, passerelles et formation 125, à Wissous (91).">
 <meta property="og:locale" content="fr_FR">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Auto-École Wissous",
-  "description": "Auto-école : permis B boîte manuelle, permis B boîte automatique et permis moto A2.",
+  "description": "Auto-école : permis B boîte manuelle et automatique, conduite accompagnée et supervisée, permis moto A2, passerelles et formation 125.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Wissous",
@@ -30,13 +29,18 @@
     "addressCountry": "FR"
   },
   "areaServed": "Essonne",
-  "priceRange": "790 € – 1 400 €",
+  "priceRange": "200 € – 1 400 €",
   "makesOffer": [
     { "@type": "Offer", "name": "Permis B boîte manuelle – 20 heures", "price": "1000", "priceCurrency": "EUR" },
     { "@type": "Offer", "name": "Permis B boîte manuelle – 30 heures", "price": "1400", "priceCurrency": "EUR" },
     { "@type": "Offer", "name": "Permis B boîte automatique – 13 heures", "price": "1000", "priceCurrency": "EUR" },
     { "@type": "Offer", "name": "Permis B boîte automatique – 20 heures", "price": "1400", "priceCurrency": "EUR" },
-    { "@type": "Offer", "name": "Permis moto A2 – 20 heures (8 h plateau, 12 h circulation)", "price": "790", "priceCurrency": "EUR" }
+    { "@type": "Offer", "name": "Option conduite accompagnée (en plus d'un forfait voiture)", "price": "200", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Option conduite supervisée (en plus d'un forfait voiture)", "price": "200", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Passerelle boîte automatique vers manuelle (B78 vers B)", "price": "400", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Permis moto A2 – 20 heures (8 h plateau, 12 h circulation)", "price": "790", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Passerelle moto A2 vers A", "price": "300", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Formation 125 cm³", "price": "400", "priceCurrency": "EUR" }
   ]
 }
 </script>
@@ -57,8 +61,9 @@
     <nav class="nav__links" id="menu" aria-label="Navigation principale">
       <a href="#manuelle">Manuelle</a>
       <a href="#automatique">Automatique</a>
+      <a href="#accompagnee">Accompagnée</a>
       <a href="#moto">Moto</a>
-      <a href="#questions">Questions</a>
+      <a href="#passerelles">Passerelles</a>
       <a href="#contact">Contact</a>
     </nav>
     <a class="nav__cta" href="#contact">S’inscrire</a>
@@ -66,26 +71,79 @@
       <span></span><span></span>
     </button>
   </div>
+  <span class="nav__progress" aria-hidden="true"></span>
 </header>
 
 <main id="contenu">
 
   <!-- Accueil -->
-  <section class="hero" id="top">
-    <div class="wrap hero__inner">
-      <p class="eyebrow">Auto-école à Wissous · Essonne (91)</p>
-      <h1>Votre permis.<br>Simplement.</h1>
-      <p class="lead">Boîte manuelle, boîte automatique ou moto A2. Des forfaits clairs et sans surprise, à&nbsp;Wissous.</p>
-      <div class="hero__actions">
-        <a class="btn" href="#manuelle">Voir les forfaits</a>
-        <a class="link" href="#contact">Nous contacter <span aria-hidden="true">›</span></a>
+  <section class="hero on-brand" id="top">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="pill">Auto-école à Wissous · Essonne (91)</p>
+        <h1>Votre permis.<br><span class="hero__accent">Simplement.</span></h1>
+        <p class="lead">Boîte manuelle ou automatique, conduite accompagnée, moto A2 et passerelles. Des forfaits clairs, à prix fixe, à&nbsp;Wissous.</p>
+        <div class="hero__actions">
+          <a class="btn btn--light" href="#manuelle">Voir les forfaits</a>
+          <a class="link" href="#contact">Nous contacter <span aria-hidden="true">›</span></a>
+        </div>
       </div>
 
-      <div class="road" aria-hidden="true"></div>
+      <div class="hero__visual">
+        <div class="scene" id="scene" aria-hidden="true">
+          <div class="scene__sky">
+            <span class="scene__sun"></span>
+            <span class="scene__cloud scene__cloud--1"></span>
+            <span class="scene__cloud scene__cloud--2"></span>
+            <span class="scene__cloud scene__cloud--3"></span>
+            <svg class="scene__hills" viewBox="0 0 400 60" preserveAspectRatio="none">
+              <path class="scene__hill-far" d="M0 60V30c40-14 70-20 110-10s70 6 100-6 80-16 120-4 50 12 70 8V60z"/>
+              <path class="scene__hill-near" d="M0 60V42c30-6 60-10 100-2s80 4 120-6 70-6 100 2 50 8 80 4V60z"/>
+            </svg>
+          </div>
+          <div class="scene__world">
+            <div class="scene__ground">
+              <div class="scene__road"></div>
+              <span class="scene__tree" style="--x: 148cqw; --i: 0"></span>
+              <span class="scene__tree" style="--x: 252cqw; --i: 0.5"></span>
+              <span class="scene__tree" style="--x: 132cqw; --i: 1"></span>
+              <span class="scene__tree" style="--x: 266cqw; --i: 1.5"></span>
+              <span class="scene__tree" style="--x: 150cqw; --i: 2"></span>
+              <span class="scene__tree" style="--x: 250cqw; --i: 2.5"></span>
+              <span class="scene__tree" style="--x: 128cqw; --i: 3"></span>
+              <span class="scene__tree" style="--x: 270cqw; --i: 3.5"></span>
+              <span class="scene__tree" style="--x: 146cqw; --i: 4"></span>
+              <span class="scene__tree" style="--x: 256cqw; --i: 4.5"></span>
+            </div>
+          </div>
+          <span class="scene__haze"></span>
+          <div class="scene__car">
+            <svg viewBox="0 0 200 150">
+              <ellipse class="car__shadow" cx="100" cy="141" rx="94" ry="8"/>
+              <rect class="car__tyre" x="24" y="112" width="30" height="28" rx="7"/>
+              <rect class="car__tyre" x="146" y="112" width="30" height="28" rx="7"/>
+              <path class="car__cabin" d="M44 62l13-32c2-5 6-8 12-8h62c6 0 10 3 12 8l13 32z"/>
+              <path class="car__glass" d="M56 58l10-25c1-3 3-5 7-5h54c4 0 6 2 7 5l10 25z"/>
+              <path class="car__body" d="M12 82c0-11 7-18 18-20l22-4h96l22 4c11 2 18 9 18 20v30c0 7-5 12-12 12H24c-7 0-12-5-12-12z"/>
+              <rect class="car__light" x="20" y="76" width="32" height="12" rx="6"/>
+              <rect class="car__light" x="148" y="76" width="32" height="12" rx="6"/>
+              <rect class="car__plate" x="74" y="94" width="52" height="15" rx="3"/>
+              <rect class="car__trim" x="12" y="110" width="176" height="6" rx="3"/>
+              <g class="car__sign">
+                <rect x="58" y="3" width="84" height="18" rx="5"/>
+                <text x="100" y="15.6" text-anchor="middle">AUTO-ÉCOLE</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <p class="hero__hint">Bougez la souris : c’est vous qui tenez le volant.</p>
+      </div>
+    </div>
 
+    <div class="wrap">
       <ul class="tiles" aria-label="Nos formations">
         <li>
-          <a class="tile" href="#manuelle">
+          <a class="tile card-light" href="#manuelle" data-tilt>
             <span class="tile__top"><span class="badge">B</span><span class="tile__arrow" aria-hidden="true">→</span></span>
             <span class="tile__title">Boîte manuelle</span>
             <span class="tile__meta">20 ou 30 heures</span>
@@ -93,7 +151,7 @@
           </a>
         </li>
         <li>
-          <a class="tile" href="#automatique">
+          <a class="tile card-light" href="#automatique" data-tilt>
             <span class="tile__top"><span class="badge">B78</span><span class="tile__arrow" aria-hidden="true">→</span></span>
             <span class="tile__title">Boîte automatique</span>
             <span class="tile__meta">13 ou 20 heures</span>
@@ -101,43 +159,83 @@
           </a>
         </li>
         <li>
-          <a class="tile" href="#moto">
+          <a class="tile card-light" href="#moto" data-tilt>
             <span class="tile__top"><span class="badge">A2</span><span class="tile__arrow" aria-hidden="true">→</span></span>
             <span class="tile__title">Moto</span>
             <span class="tile__meta">20 heures</span>
             <span class="tile__price">790&nbsp;€</span>
           </a>
         </li>
+        <li>
+          <a class="tile card-light" href="#passerelles" data-tilt>
+            <span class="tile__top"><span class="badge">7 h</span><span class="tile__arrow" aria-hidden="true">→</span></span>
+            <span class="tile__title">Passerelles et 125</span>
+            <span class="tile__meta">Sans examen</span>
+            <span class="tile__price">Dès 300&nbsp;€</span>
+          </a>
+        </li>
       </ul>
     </div>
   </section>
 
+  <div class="marquee on-navy" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Boîte manuelle</span><i></i><span>Boîte automatique</span><i></i><span>Conduite accompagnée</span><i></i><span>Conduite supervisée</span><i></i><span>Permis moto A2</span><i></i><span>Passerelle A2 → A</span><i></i><span>Passerelle B78 → B</span><i></i><span>Formation 125 cm³</span><i></i>
+      <span>Boîte manuelle</span><i></i><span>Boîte automatique</span><i></i><span>Conduite accompagnée</span><i></i><span>Conduite supervisée</span><i></i><span>Permis moto A2</span><i></i><span>Passerelle A2 → A</span><i></i><span>Passerelle B78 → B</span><i></i><span>Formation 125 cm³</span><i></i>
+    </div>
+  </div>
+
   <!-- Boîte manuelle -->
-  <section class="section section--alt" id="manuelle">
+  <section class="section" id="manuelle">
     <div class="wrap">
-      <header class="section__head">
-        <p class="eyebrow"><span class="badge">B</span> Boîte manuelle</p>
-        <h2>Maîtrisez chaque rapport.</h2>
-        <p class="lead">Embrayage, passage des vitesses, démarrage en côte. La formation complète pour conduire tous les véhicules du permis&nbsp;B.</p>
-      </header>
+      <div class="intro">
+        <div class="intro__text" data-reveal>
+          <p class="eyebrow"><span class="badge">B</span> Boîte manuelle</p>
+          <h2>Maîtrisez chaque rapport.</h2>
+          <p class="lead">Embrayage, passage des vitesses, démarrage en côte. La formation complète pour conduire tous les véhicules du permis&nbsp;B.</p>
+        </div>
+        <figure class="illu" data-reveal aria-hidden="true">
+          <svg class="gears" viewBox="0 0 240 200">
+            <defs>
+              <radialGradient id="knob-gradient" cx="35%" cy="30%" r="75%">
+                <stop offset="0" class="stop-hi"/>
+                <stop offset="0.55" class="stop-mid"/>
+                <stop offset="1" class="stop-lo"/>
+              </radialGradient>
+            </defs>
+            <path class="gears__gate" d="M60 40v120M120 40v120M180 40v120M60 100h120"/>
+            <text class="gears__label gears__label--1" x="60" y="22">1</text>
+            <text class="gears__label gears__label--2" x="60" y="190">2</text>
+            <text class="gears__label gears__label--3" x="120" y="22">3</text>
+            <text class="gears__label gears__label--4" x="120" y="190">4</text>
+            <text class="gears__label gears__label--5" x="180" y="22">5</text>
+            <text class="gears__label" x="180" y="190">R</text>
+            <g class="gears__knob">
+              <circle r="19" class="gears__halo"/>
+              <circle r="15" fill="url(#knob-gradient)"/>
+              <circle r="5" cx="-4" cy="-5" class="gears__shine"/>
+            </g>
+          </svg>
+        </figure>
+      </div>
 
       <div class="plans">
-        <article class="plan">
+        <article class="plan" data-tilt data-reveal>
           <p class="plan__label">Forfait conduite</p>
-          <h3 class="plan__hours">20 <small>heures</small></h3>
+          <h3 class="plan__hours"><span data-count="20">20</span> <small>heures</small></h3>
           <p class="plan__desc">Le minimum légal en boîte manuelle. Pour les élèves qui ont déjà quelques bases.</p>
           <div class="plan__foot">
             <p class="plan__price">1&nbsp;000&nbsp;€</p>
-            <a class="btn btn--small" href="#contact" data-plan="Boîte manuelle – 20 heures – 1 000 €">Choisir</a>
+            <a class="btn btn--small" href="#contact" data-plan="Boîte manuelle – 20 heures">Choisir</a>
           </div>
         </article>
-        <article class="plan">
+        <article class="plan" data-tilt data-reveal style="--delay: 0.08s">
           <p class="plan__label">Forfait conduite</p>
-          <h3 class="plan__hours">30 <small>heures</small></h3>
+          <h3 class="plan__hours"><span data-count="30">30</span> <small>heures</small></h3>
           <p class="plan__desc">Dix heures de plus pour gagner en aisance et aborder l’examen sereinement.</p>
           <div class="plan__foot">
             <p class="plan__price">1&nbsp;400&nbsp;€</p>
-            <a class="btn btn--small" href="#contact" data-plan="Boîte manuelle – 30 heures – 1 400 €">Choisir</a>
+            <a class="btn btn--small" href="#contact" data-plan="Boîte manuelle – 30 heures">Choisir</a>
           </div>
         </article>
       </div>
@@ -145,76 +243,202 @@
   </section>
 
   <!-- Boîte automatique -->
-  <section class="section" id="automatique">
+  <section class="section section--alt" id="automatique">
     <div class="wrap">
-      <header class="section__head">
-        <p class="eyebrow"><span class="badge">B78</span> Boîte automatique</p>
-        <h2>Concentrez-vous sur la route.</h2>
-        <p class="lead">Pas d’embrayage, pas de vitesses à passer. Une formation plus courte et une conduite plus détendue, surtout en ville.</p>
-      </header>
+      <div class="intro intro--reverse">
+        <div class="intro__text" data-reveal>
+          <p class="eyebrow"><span class="badge">B78</span> Boîte automatique</p>
+          <h2>Concentrez-vous sur la route.</h2>
+          <p class="lead">Pas d’embrayage, pas de vitesses à passer. Une formation plus courte et une conduite plus détendue, surtout en ville.</p>
+        </div>
+        <figure class="illu" data-reveal aria-hidden="true">
+          <svg class="selector" viewBox="0 0 240 200">
+            <rect class="selector__console" x="66" y="8" width="108" height="184" rx="30"/>
+            <path class="selector__slot" d="M146 40v120"/>
+            <text class="selector__label selector__label--p" x="104" y="40">P</text>
+            <text class="selector__label selector__label--r" x="104" y="80">R</text>
+            <text class="selector__label selector__label--n" x="104" y="120">N</text>
+            <text class="selector__label selector__label--d" x="104" y="160">D</text>
+            <g class="selector__knob">
+              <rect x="-20" y="-13" width="40" height="26" rx="13" fill="url(#knob-gradient)"/>
+              <rect x="-12" y="-8" width="14" height="5" rx="2.5" class="gears__shine"/>
+            </g>
+          </svg>
+        </figure>
+      </div>
 
       <div class="plans">
-        <article class="plan">
+        <article class="plan" data-tilt data-reveal>
           <p class="plan__label">Forfait conduite</p>
-          <h3 class="plan__hours">13 <small>heures</small></h3>
+          <h3 class="plan__hours"><span data-count="13">13</span> <small>heures</small></h3>
           <p class="plan__desc">Le minimum légal en boîte automatique. Pour aller à l’essentiel.</p>
           <div class="plan__foot">
             <p class="plan__price">1&nbsp;000&nbsp;€</p>
-            <a class="btn btn--small" href="#contact" data-plan="Boîte automatique – 13 heures – 1 000 €">Choisir</a>
+            <a class="btn btn--small" href="#contact" data-plan="Boîte automatique – 13 heures">Choisir</a>
           </div>
         </article>
-        <article class="plan">
+        <article class="plan" data-tilt data-reveal style="--delay: 0.08s">
           <p class="plan__label">Forfait conduite</p>
-          <h3 class="plan__hours">20 <small>heures</small></h3>
+          <h3 class="plan__hours"><span data-count="20">20</span> <small>heures</small></h3>
           <p class="plan__desc">Sept heures de plus pour prendre confiance avant le jour de l’examen.</p>
           <div class="plan__foot">
             <p class="plan__price">1&nbsp;400&nbsp;€</p>
-            <a class="btn btn--small" href="#contact" data-plan="Boîte automatique – 20 heures – 1 400 €">Choisir</a>
+            <a class="btn btn--small" href="#contact" data-plan="Boîte automatique – 20 heures">Choisir</a>
           </div>
         </article>
       </div>
 
-      <p class="note">Après 3&nbsp;mois de permis automatique, une formation de 7&nbsp;heures suffit pour conduire aussi en boîte manuelle, sans repasser l’examen.</p>
+      <p class="note" data-reveal>Plus tard, envie de passer à la boîte manuelle&#8239;? <a href="#passerelles">Découvrez la passerelle B78&nbsp;→&nbsp;B <span aria-hidden="true">›</span></a></p>
+    </div>
+  </section>
+
+  <!-- Conduite accompagnée et supervisée -->
+  <section class="section" id="accompagnee">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">Options voiture</p>
+        <h2>Prenez de l’avance.</h2>
+        <p class="lead">La conduite accompagnée ou supervisée s’ajoute à n’importe quel forfait voiture, en boîte manuelle comme en automatique.</p>
+      </header>
+
+      <div class="options">
+        <article class="option" data-tilt data-reveal>
+          <div class="option__head">
+            <p class="tag">Dès 15 ans</p>
+            <p class="option__price">+200&nbsp;€ <small>en plus du forfait</small></p>
+          </div>
+          <h3>Conduite accompagnée</h3>
+          <p class="option__desc">Commencez tôt et accumulez de l’expérience avec un proche avant l’examen.</p>
+          <ol class="steps">
+            <li><b>Formation initiale</b><span>Votre forfait en auto-école</span></li>
+            <li><b>1 an et 3&nbsp;000&nbsp;km minimum</b><span>Avec votre accompagnateur</span></li>
+            <li><b>Examen dès 17 ans</b><span>Période probatoire réduite à 2&nbsp;ans</span></li>
+          </ol>
+          <a class="btn btn--small btn--soft" href="#contact" data-option="Conduite accompagnée">Ajouter à mon forfait</a>
+        </article>
+        <article class="option" data-tilt data-reveal style="--delay: 0.08s">
+          <div class="option__head">
+            <p class="tag">Formule souple</p>
+            <p class="option__price">+200&nbsp;€ <small>en plus du forfait</small></p>
+          </div>
+          <h3>Conduite supervisée</h3>
+          <p class="option__desc">Prenez de l’assurance avec un accompagnateur avant l’examen, ou après un échec à l’épreuve pratique.</p>
+          <ol class="steps">
+            <li><b>Formation initiale</b><span>Votre forfait en auto-école</span></li>
+            <li><b>1&nbsp;000&nbsp;km conseillés</b><span>Avec votre accompagnateur, sans durée minimale</span></li>
+            <li><b>Examen</b><span>Dès que vous êtes prêt</span></li>
+          </ol>
+          <a class="btn btn--small btn--soft" href="#contact" data-option="Conduite supervisée">Ajouter à mon forfait</a>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- Moto A2 -->
-  <section class="section section--band" id="moto">
+  <section class="section on-navy" id="moto">
     <div class="wrap">
-      <header class="section__head">
+      <header class="section__head" data-reveal>
         <p class="eyebrow"><span class="badge">A2</span> Permis moto</p>
         <h2>Deux roues. Vingt heures.</h2>
         <p class="lead">Un forfait complet pour le permis A2&nbsp;: la maîtrise de la moto sur plateau, puis la conduite en circulation.</p>
       </header>
 
       <div class="moto">
-        <article class="plan">
+        <article class="plan" data-tilt data-reveal>
           <p class="plan__label">Forfait permis A2</p>
-          <h3 class="plan__hours">20 <small>heures</small></h3>
+          <h3 class="plan__hours"><span data-count="20">20</span> <small>heures</small></h3>
           <p class="plan__desc">8&nbsp;heures de plateau et 12&nbsp;heures de circulation.</p>
           <div class="plan__foot">
             <p class="plan__price">790&nbsp;€</p>
-            <a class="btn btn--small" href="#contact" data-plan="Moto A2 – 20 heures – 790 €">Choisir</a>
+            <a class="btn btn--small" href="#contact" data-plan="Moto A2 – 20 heures">Choisir</a>
           </div>
         </article>
 
-        <div class="split">
-          <p class="split__title">Répartition des 20&nbsp;heures</p>
-          <div class="split__bar" role="img" aria-label="8 heures de plateau, soit 40 %, et 12 heures de circulation, soit 60 %">
-            <span class="split__seg split__seg--plateau">8&nbsp;h</span>
-            <span class="split__seg split__seg--road">12&nbsp;h</span>
+        <div class="moto__visual" data-reveal style="--delay: 0.08s">
+          <svg class="slalom" viewBox="0 0 400 220" aria-hidden="true">
+            <rect class="slalom__ground" x="4" y="4" width="392" height="212" rx="28"/>
+            <path id="slalom-path" class="slalom__path" d="M40 110C60 50 100 50 110 110S160 170 170 110S220 50 230 110S280 170 290 110S340 50 360 110C375 160 350 190 310 190L90 190C50 190 25 150 40 110Z"/>
+            <g class="slalom__cone" transform="translate(80 110)"><circle r="8"/><circle r="3.5" class="slalom__cone-top"/></g>
+            <g class="slalom__cone" transform="translate(140 110)"><circle r="8"/><circle r="3.5" class="slalom__cone-top"/></g>
+            <g class="slalom__cone" transform="translate(200 110)"><circle r="8"/><circle r="3.5" class="slalom__cone-top"/></g>
+            <g class="slalom__cone" transform="translate(260 110)"><circle r="8"/><circle r="3.5" class="slalom__cone-top"/></g>
+            <g class="slalom__cone" transform="translate(320 110)"><circle r="8"/><circle r="3.5" class="slalom__cone-top"/></g>
+            <g class="slalom__moto">
+              <path class="slalom__beam" d="M16 -4L46 -14V14L16 4Z"/>
+              <rect class="slalom__bike" x="-16" y="-4.5" width="32" height="9" rx="4.5"/>
+              <rect class="slalom__bar" x="6" y="-9" width="3" height="18" rx="1.5"/>
+              <circle class="slalom__rider" cx="-2" cy="0" r="6"/>
+              <animateMotion dur="9s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#slalom-path"/>
+              </animateMotion>
+            </g>
+          </svg>
+
+          <div class="split">
+            <p class="split__title">Répartition des 20&nbsp;heures</p>
+            <div class="split__bar" role="img" aria-label="8 heures de plateau, soit 40 %, et 12 heures de circulation, soit 60 %">
+              <span class="split__seg split__seg--plateau">8&nbsp;h</span>
+              <span class="split__seg split__seg--road">12&nbsp;h</span>
+            </div>
+            <dl class="split__legend">
+              <div>
+                <dt><i class="dot dot--plateau" aria-hidden="true"></i>Plateau · 8&nbsp;h</dt>
+                <dd>Sur piste fermée&nbsp;: maniabilité à allure lente puis plus soutenue, freinage, évitement.</dd>
+              </div>
+              <div>
+                <dt><i class="dot dot--road" aria-hidden="true"></i>Circulation · 12&nbsp;h</dt>
+                <dd>Sur route ouverte, en ville et hors agglomération, dans les conditions de l’examen.</dd>
+              </div>
+            </dl>
           </div>
-          <dl class="split__legend">
-            <div>
-              <dt><i class="dot dot--plateau" aria-hidden="true"></i>Plateau · 8&nbsp;h</dt>
-              <dd>Sur piste fermée&nbsp;: maniabilité à allure lente puis plus soutenue, freinage, évitement.</dd>
-            </div>
-            <div>
-              <dt><i class="dot dot--road" aria-hidden="true"></i>Circulation · 12&nbsp;h</dt>
-              <dd>Sur route ouverte, en ville et hors agglomération, dans les conditions de l’examen.</dd>
-            </div>
-          </dl>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Passerelles et formation 125 -->
+  <section class="section section--alt" id="passerelles">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">Passerelles et formations</p>
+        <h2>Faites évoluer votre permis.</h2>
+        <p class="lead">Sept heures de formation, sans repasser d’examen.</p>
+      </header>
+
+      <div class="bridges">
+        <article class="bridge" data-tilt data-reveal>
+          <div class="bridge__route"><span class="badge">B78</span><span class="bridge__arrow" aria-hidden="true"></span><span class="badge">B</span></div>
+          <h3>Automatique vers manuelle</h3>
+          <p class="bridge__price">400&nbsp;€</p>
+          <dl class="bridge__facts">
+            <div><dt>Condition</dt><dd>3 mois de permis B78</dd></div>
+            <div><dt>Formation</dt><dd>7 heures</dd></div>
+            <div><dt>Résultat</dt><dd>Toutes les voitures du permis B</dd></div>
+          </dl>
+          <a class="btn btn--small" href="#contact" data-plan="Passerelle automatique → manuelle">Choisir</a>
+        </article>
+        <article class="bridge" data-tilt data-reveal style="--delay: 0.08s">
+          <div class="bridge__route"><span class="badge">A2</span><span class="bridge__arrow" aria-hidden="true"></span><span class="badge">A</span></div>
+          <h3>Moto A2 vers A</h3>
+          <p class="bridge__price">300&nbsp;€</p>
+          <dl class="bridge__facts">
+            <div><dt>Condition</dt><dd>2 ans de permis A2</dd></div>
+            <div><dt>Formation</dt><dd>7 heures</dd></div>
+            <div><dt>Résultat</dt><dd>Toutes les motos, sans limite de puissance</dd></div>
+          </dl>
+          <a class="btn btn--small" href="#contact" data-plan="Passerelle A2 → A">Choisir</a>
+        </article>
+        <article class="bridge" data-tilt data-reveal style="--delay: 0.16s">
+          <div class="bridge__route"><span class="badge">B</span><span class="bridge__arrow" aria-hidden="true"></span><span class="badge">125 cm³</span></div>
+          <h3>Formation 125</h3>
+          <p class="bridge__price">400&nbsp;€</p>
+          <dl class="bridge__facts">
+            <div><dt>Condition</dt><dd>2 ans de permis B</dd></div>
+            <div><dt>Formation</dt><dd>7 heures&nbsp;: 2&nbsp;h de théorie, 2&nbsp;h de plateau, 3&nbsp;h de circulation</dd></div>
+            <div><dt>Résultat</dt><dd>Motos et scooters jusqu’à 125&nbsp;cm³</dd></div>
+          </dl>
+          <a class="btn btn--small" href="#contact" data-plan="Formation 125">Choisir</a>
+        </article>
       </div>
     </div>
   </section>
@@ -222,22 +446,30 @@
   <!-- Questions -->
   <section class="section" id="questions">
     <div class="wrap">
-      <header class="section__head">
+      <header class="section__head" data-reveal>
         <h2>Questions fréquentes.</h2>
       </header>
 
-      <div class="faq">
+      <div class="faq" data-reveal>
         <details>
           <summary>Boîte manuelle ou automatique&#8239;?</summary>
           <p>En boîte automatique, pas d’embrayage ni de vitesses à passer&nbsp;: la formation est plus courte, avec 13&nbsp;heures minimum contre 20 en boîte manuelle. Le permis obtenu porte la mention 78 et limite la conduite aux véhicules automatiques.</p>
         </details>
         <details>
           <summary>Avec un permis automatique, pourrai-je conduire une manuelle&#8239;?</summary>
-          <p>Oui. Après 3&nbsp;mois de permis, une formation de 7&nbsp;heures en auto-école permet de lever la restriction, sans nouvel examen.</p>
+          <p>Oui. Après 3&nbsp;mois de permis, la passerelle B78&nbsp;→&nbsp;B (7&nbsp;heures de formation, 400&nbsp;€) lève la restriction, sans nouvel examen.</p>
+        </details>
+        <details>
+          <summary>Conduite accompagnée ou supervisée&#8239;?</summary>
+          <p>La conduite accompagnée commence dès 15&nbsp;ans et dure au moins 1&nbsp;an et 3&nbsp;000&nbsp;km&nbsp;; elle permet de passer l’examen dès 17&nbsp;ans et réduit la période probatoire à 2&nbsp;ans. La conduite supervisée n’a pas de durée minimale&nbsp;: elle sert à gagner en expérience avant l’examen ou après un échec. Les deux s’ajoutent à votre forfait voiture pour 200&nbsp;€.</p>
         </details>
         <details>
           <summary>Qu’est-ce que le permis A2&#8239;?</summary>
-          <p>C’est le permis moto accessible dès 18&nbsp;ans. Il permet de conduire des motos d’une puissance maximale de 35&nbsp;kW. Après 2&nbsp;ans de permis A2, une formation de 7&nbsp;heures donne accès au permis&nbsp;A.</p>
+          <p>C’est le permis moto accessible dès 18&nbsp;ans. Il permet de conduire des motos d’une puissance maximale de 35&nbsp;kW. Après 2&nbsp;ans de permis A2, la passerelle vers le permis&nbsp;A (7&nbsp;heures de formation, 300&nbsp;€) donne accès à toutes les motos.</p>
+        </details>
+        <details>
+          <summary>Que permet la formation 125&#8239;?</summary>
+          <p>Avec le permis B depuis au moins 2&nbsp;ans, 7&nbsp;heures de formation permettent de conduire une moto ou un scooter jusqu’à 125&nbsp;cm³, sans examen. Vous recevez une attestation à la fin de la formation.</p>
         </details>
         <details>
           <summary>Plateau et circulation, quelle différence&#8239;?</summary>
@@ -248,10 +480,10 @@
   </section>
 
   <!-- Contact -->
-  <section class="section section--alt" id="contact">
+  <section class="section on-brand section--contact" id="contact">
     <div class="wrap">
       <div class="contact">
-        <div class="contact__intro">
+        <div class="contact__intro" data-reveal>
           <p class="eyebrow">Contact</p>
           <h2>Prêt à prendre la route&#8239;?</h2>
           <p class="lead">Choisissez votre forfait et envoyez-nous votre demande. Nous revenons vers vous pour finaliser l’inscription.</p>
@@ -271,7 +503,7 @@
           </dl>
         </div>
 
-        <form class="form" id="contact-form" novalidate>
+        <form class="form card-light" id="contact-form" novalidate data-reveal style="--delay: 0.08s">
           <div class="field">
             <label for="f-name">Nom et prénom *</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -290,22 +522,42 @@
               <select id="f-plan" name="plan">
                 <option value="Je ne sais pas encore">Je ne sais pas encore</option>
                 <optgroup label="Boîte manuelle">
-                  <option value="Boîte manuelle – 20 heures – 1 000 €">20 heures – 1 000 €</option>
-                  <option value="Boîte manuelle – 30 heures – 1 400 €">30 heures – 1 400 €</option>
+                  <option value="Boîte manuelle – 20 heures" data-price="1000" data-car>20 heures – 1 000 €</option>
+                  <option value="Boîte manuelle – 30 heures" data-price="1400" data-car>30 heures – 1 400 €</option>
                 </optgroup>
                 <optgroup label="Boîte automatique">
-                  <option value="Boîte automatique – 13 heures – 1 000 €">13 heures – 1 000 €</option>
-                  <option value="Boîte automatique – 20 heures – 1 400 €">20 heures – 1 400 €</option>
+                  <option value="Boîte automatique – 13 heures" data-price="1000" data-car>13 heures – 1 000 €</option>
+                  <option value="Boîte automatique – 20 heures" data-price="1400" data-car>20 heures – 1 400 €</option>
                 </optgroup>
-                <optgroup label="Moto A2">
-                  <option value="Moto A2 – 20 heures – 790 €">20 heures (8 h plateau + 12 h circulation) – 790 €</option>
+                <optgroup label="Moto">
+                  <option value="Moto A2 – 20 heures" data-price="790">Permis A2, 20 heures – 790 €</option>
+                </optgroup>
+                <optgroup label="Passerelles et formations">
+                  <option value="Passerelle automatique → manuelle" data-price="400">Automatique vers manuelle (B78 → B) – 400 €</option>
+                  <option value="Passerelle A2 → A" data-price="300">Moto A2 vers A – 300 €</option>
+                  <option value="Formation 125" data-price="400">Formation 125 cm³ – 400 €</option>
                 </optgroup>
               </select>
             </div>
           </div>
           <div class="field field--full">
+            <label for="f-option">Option voiture</label>
+            <div class="select">
+              <select id="f-option" name="option">
+                <option value="Aucune" data-price="0">Aucune</option>
+                <option value="Conduite accompagnée" data-price="200">Conduite accompagnée – +200 €</option>
+                <option value="Conduite supervisée" data-price="200">Conduite supervisée – +200 €</option>
+              </select>
+            </div>
+            <p class="field__hint" id="option-hint" hidden>Les options s’ajoutent à un forfait voiture.</p>
+          </div>
+          <div class="field field--full">
             <label for="f-message">Message</label>
-            <textarea id="f-message" name="message" rows="4" placeholder="Vos disponibilités, une question…"></textarea>
+            <textarea id="f-message" name="message" rows="3" placeholder="Vos disponibilités, une question…"></textarea>
+          </div>
+          <div class="total" aria-live="polite">
+            <span class="total__label">Total estimé</span>
+            <span class="total__value" id="total">À définir</span>
           </div>
           <div class="form__foot">
             <button class="btn" type="submit">Envoyer ma demande</button>
@@ -319,13 +571,15 @@
 
 </main>
 
-<footer class="footer">
+<footer class="footer on-navy">
   <div class="wrap footer__inner">
     <p class="footer__brand">Auto-École Wissous</p>
     <nav class="footer__links" aria-label="Liens de pied de page">
       <a href="#manuelle">Manuelle</a>
       <a href="#automatique">Automatique</a>
+      <a href="#accompagnee">Accompagnée</a>
       <a href="#moto">Moto</a>
+      <a href="#passerelles">Passerelles</a>
       <a href="#contact">Contact</a>
     </nav>
     <p class="footer__legal">Wissous (91320), Essonne · Tarifs TTC · © <span id="year">2026</span> Auto-École Wissous</p>
