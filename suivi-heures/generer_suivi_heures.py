@@ -1,4 +1,4 @@
-"""Génère le classeur de suivi des heures (1er déc. 2027 au 1er déc. 2028).
+"""Génère le classeur de suivi des heures sur une période (par défaut 1er déc. 2026 au 1er déc. 2027).
 
 Usage : python3 generer_suivi_heures.py [fichier_sortie.xlsx]
 Le fichier .xlsx peut ensuite être importé dans Google Drive (conversion en Google Sheets).
@@ -11,8 +11,9 @@ from openpyxl.chart import BarChart, LineChart, Reference
 from openpyxl.formatting.rule import FormulaRule
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 
-DEBUT = date(2027, 12, 1)
-FIN = date(2028, 12, 1)
+DEBUT = date(2026, 12, 1)
+FIN = date(2027, 12, 1)
+JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 
 MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
         "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
@@ -90,7 +91,8 @@ guide.title = "Mode d'emploi"
 guide["A1"] = "Suivi des heures de travail"
 guide["A1"].font = f_titre
 lignes = [
-    "Période suivie : du 1er décembre 2027 au 1er décembre 2028, une feuille par mois.",
+    f"Période suivie : du {DEBUT.day if DEBUT.day > 1 else '1er'} {MOIS[DEBUT.month - 1].lower()} {DEBUT.year} "
+    f"au {FIN.day if FIN.day > 1 else '1er'} {MOIS[FIN.month - 1].lower()} {FIN.year}, une feuille par mois.",
     "",
     "Saisie, dans la feuille du mois :",
     "1. Heure de début, au format 08:30.",
@@ -109,7 +111,7 @@ guide["A16"] = "Exemple de ligne remplie"
 guide["A16"].font = f_gras
 entete(guide, 17, ["Date", "Jour", "Début", "Fin", "Pause repas",
                    "Heures travaillées", "Heures (décimal)"])
-ex = {"A18": (date(2027, 12, 1), FMT_DATE), "B18": ("mercredi", None),
+ex = {"A18": (DEBUT, FMT_DATE), "B18": (JOURS[DEBUT.weekday()], None),
       "C18": ("=TIME(8,30,0)", FMT_HEURE), "D18": ("=TIME(17,15,0)", FMT_HEURE),
       "E18": ("=TIME(0,45,0)", FMT_DUREE), "F18": ("=MOD(D18-C18,1)-E18", FMT_DUREE),
       "G18": ("=F18*24", FMT_DEC)}
@@ -247,8 +249,8 @@ for i, (nom, a, m, l1, lN) in enumerate(infos_mois):
 # --- Synthèse (au-dessus, ligne 5-7)
 synth = [
     ("Total sur la période", f"=SUM(C{L_MOIS}:C{L_MOIS_FIN})", FMT_DEC),
-    ("Total 2027", f"=SUMIFS(C{L_MOIS}:C{L_MOIS_FIN},B{L_MOIS}:B{L_MOIS_FIN},2027)", FMT_DEC),
-    ("Total 2028", f"=SUMIFS(C{L_MOIS}:C{L_MOIS_FIN},B{L_MOIS}:B{L_MOIS_FIN},2028)", FMT_DEC),
+    (f"Total {DEBUT.year}", f"=SUMIFS(C{L_MOIS}:C{L_MOIS_FIN},B{L_MOIS}:B{L_MOIS_FIN},{DEBUT.year})", FMT_DEC),
+    (f"Total {FIN.year}", f"=SUMIFS(C{L_MOIS}:C{L_MOIS_FIN},B{L_MOIS}:B{L_MOIS_FIN},{FIN.year})", FMT_DEC),
     ("Jours travaillés", f"=SUM(E{L_MOIS}:E{L_MOIS_FIN})", "0"),
 ]
 entete_s = 5
@@ -357,6 +359,6 @@ tb.add_chart(g_sem, "I21")
 tb.freeze_panes = "A4"
 wb.active = 1
 
-sortie = sys.argv[1] if len(sys.argv) > 1 else "Suivi_des_heures_2027-2028.xlsx"
+sortie = sys.argv[1] if len(sys.argv) > 1 else f"Suivi_des_heures_{DEBUT.year}-{FIN.year}.xlsx"
 wb.save(sortie)
 print("Enregistré :", sortie, "| semaines :", L_SEM, "à", L_SEM_FIN)
